@@ -13,11 +13,15 @@
             <span class="caret"></span>
         </a>
         <ul class="dropdown-menu" aria-labelledby="userDropdownMenu">
-            <li><a href="#">Signed in as {{username}}</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Signed in as {{username}}</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Change Password</a></li>
+            <li><a href="#"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Change Password</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="{% url 'ACMS:index' %}" >Log out</a></li>
+            {% if admin %}
+                <li><a href="/admin/" target="_blank"><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>&nbsp;Admin Portal</a></li>
+                <li role="separator" class="divider"></li>
+            {% endif %}
+            <li><a href="{% url 'ACMS:index' %}" > <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp;Sign out</a></li>
         </ul>
     </li>
 {% endblock nav %}
@@ -28,7 +32,7 @@
   <div class="row">
     <section class="col-xs-offset-3 col-xs-6 col-sm-offset-0 col-sm-6 col-md-4 col-lg-4">
       <img class="icon" src="../../static/ACMS/img/icon-health.svg" alt="Icon">
-      <a href="#" ><h3 id="patients"class="iconLabel" >PATIENTS</h3></a>
+      <a href="{% url 'ACMS:workpage' %}" ><h3 id="patients"class="iconLabel" >PATIENTS</h3></a>
       <p>Wellness and senior exams, ultrasound, x-ray, and dental cleanings are just a few of our general health services.</p>
     </section>
 
