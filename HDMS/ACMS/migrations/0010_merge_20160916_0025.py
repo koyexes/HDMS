@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='state',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=15, verbose_name='State')),
+                ('state_name', models.CharField(max_length=15, verbose_name='State')),
             ],
         ),
     ]
