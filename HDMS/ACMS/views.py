@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .forms import LoginForm, PatientForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -7,10 +7,11 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import hashers
-from models import hmo_list, state
 
 
 # Create your views here.
+
+login_url = '/acms/login'
 
 def index(request):
     if request.method == "POST": # checking if it's a post request
@@ -49,20 +50,35 @@ def index(request):
 
 
 
-@login_required(redirect_field_name="", login_url='/acms/login') # login required to view this page
+@login_required(redirect_field_name="", login_url=login_url) # login required to view this page
 def homepage(request):
     admin = False
     if request.user.is_staff: admin = True # checking if the user has administrative rights
     context = {"name" : "%s %s" % ( request.user.first_name, request.user.last_name), "username" : request.user.username, "admin" : admin} # declaring the template context
     return render(request, 'acms/homepage.html', context) # rendering the homepage template
 
-@login_required(redirect_field_name="", login_url='/acms/login')
+@login_required(redirect_field_name="", login_url=login_url)
 def workpage(request):
     admin = False
     if request.user.is_staff: admin = True
     patient_form = PatientForm(auto_id= False)
     context = {"name" : "%s %s" % (request.user.last_name, request.user.first_name), "username" : request.user.username, 'admin': admin, "patient_form" : patient_form}
     return render(request, 'acms/workpage.html', context)
+
+@login_required(redirect_field_name = "", login_url = login_url)
+def patient(request):
+    if request.method == 'POST': # checking the request method
+        patient_form = PatientForm(request.POST, user = request.user)
+        if patient_form.is_valid():
+            patient_form.save()
+            messages.success(request, str(patient_form))
+            return HttpResponseRedirect(reverse('ACMS:workpage'))
+        else:
+            messages.error(request, "Patient couldn't be created")
+            return HttpResponseRedirect(reverse('ACMS:workpage'))
+    else:
+        return HttpResponseRedirect(reverse('ACMS:workpage'))
+
 
 
 

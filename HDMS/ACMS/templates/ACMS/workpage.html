@@ -164,7 +164,7 @@
             <h4 id="modalLabel">New Patient</h4>
           </div><!-- modal-header -->
           <div class="modal-body">
-             <form id="patientForm" action="{% url 'ACMS:workpage' %}" method="post">
+             <form id="patientForm" action="{% url 'ACMS:patient' %}" method="post">
                  {% csrf_token %}
               <div class="form-group">
                 <label for="surname">Surname<span id="required">*</span></label>
@@ -241,6 +241,27 @@
 </div><!-- modal -->
 <!-- end of drug modal form -->
 
+<!-- alert modal -->
+
+<div class="modal fade" {% if messages %} id="alert-modal" {% else %} id="dont-alert-modal" {% endif %} tabindex="-1" role="dialog" aria-labelledby="modalLabel" data-backdrop ="static" >
+      <div  class="modal-dialog " role="document">
+        <div  id="form-feedback-alert" class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+              {% for message in messages %}
+                  {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    <p class="text-success"><strong>Successful</strong></p>
+                  {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <p class="text-danger"><strong>Error</strong></p>
+                  {% endif %}
+                  <p>{{ message }}</p>
+              {% endfor %}
+
+        </div>
+      </div><!-- modal-dialog -->
+</div><!-- modal -->
+<!-- end of alert modal  -->
+
 {% endblock content %}
 
 {% block footer %}
@@ -255,5 +276,6 @@
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
+
     </script>
 {% endblock scripts %}

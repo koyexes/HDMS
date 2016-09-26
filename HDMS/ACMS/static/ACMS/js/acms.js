@@ -20,9 +20,25 @@ $('.iconLabel').hover(
     function(e){ $(e.target).parent().siblings('img').css({" -ms-filter" :"grayscale(100%)", "filter" : "grayscale(100%)", "-webkit-filter" : "grayscale(100%)"});}
 );
 
-// resetting all form inputs when form modal closes
+/******** WORKPAGE SECTION *******/
+// resetting all patient form inputs when form modal closes
 $('#patientModalForm').on('hidden.bs.modal', function(e){
    // alert("Hello world");
    $('#patientForm').trigger('reset');
 });
+
+// shows alert modal for messages to be displayed to users
+$('#alert-modal').modal('show');
+
+// changes the id attribute of the alert modal after closing it
+$('#alert').on('hidden.bs.modal', function(e){
+    $('#alert').attr('id', 'dont-alert-modal');
+});
+
+// closes alert-modal after alert closes
+$('#form-feedback-alert').on('closed.bs.alert', function () {
+    $('#alert-modal').modal('hide');
+})
+
+
 

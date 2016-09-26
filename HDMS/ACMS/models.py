@@ -25,7 +25,6 @@ class state(models.Model):
     def __str__(self):
         return ("%s" % self.state_name)
 
-
 class patient(models.Model):
     surname = models.CharField(max_length = 20)
     firstname = models.CharField(max_length = 20)

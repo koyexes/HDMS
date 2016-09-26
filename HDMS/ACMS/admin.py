@@ -4,12 +4,15 @@ from .models import hmo_list, drug, patient, state
 
 class HmoList(admin.ModelAdmin):
     list_display = ('name', 'mobile', 'email', 'address', 'hmo_status', 'added_by')
+    search_fields = ['name']
 
 class Patient(admin.ModelAdmin):
-    list_display = ('surname', 'firstname', 'card_no', 'phone_number','gender', 'hmo_id', 'added_by')
+    list_display = ('surname', 'firstname', 'card_no', 'phone_number','gender', 'hmo', 'added_by')
+    search_fields = ['surname', 'firstname', 'hmo__name', 'card_no']
 
 class Drug(admin.ModelAdmin):
     list_display = ('drug_name', 'drug_code', 'date_added', 'added_by')
+    search_fields = ['drug_name', 'drug_code']
 
 class State(admin.ModelAdmin):
     list_display = ('state_name',)
