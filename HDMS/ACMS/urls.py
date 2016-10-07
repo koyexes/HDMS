@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^homepage/$', views.homepage, name='homepage'),
     url(r'^workpage/$', views.workpage, name='workpage'),
     url(r'^workpage/patient/$', views.patient, name = 'patient'),
+    url(r'^workpage/drug/$', views.drug, name = 'drug'),
+
 
 
 ]
