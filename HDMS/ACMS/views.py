@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .forms import LoginForm, PatientForm
+from .forms import LoginForm, PatientForm, DrugForm, HmoForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseRedirect
@@ -62,7 +62,9 @@ def workpage(request):
     admin = False
     if request.user.is_staff: admin = True
     patient_form = PatientForm(auto_id= False)
-    context = {"name" : "%s %s" % (request.user.last_name, request.user.first_name), "username" : request.user.username, 'admin': admin, "patient_form" : patient_form}
+    drug_form = DrugForm(auto_id = False)
+    hmo_form = HmoForm(auto_id = False)
+    context = {"name" : "%s %s" % (request.user.last_name, request.user.first_name), "username" : request.user.username, 'admin': admin, "patient_form" : patient_form, 'drug_form': drug_form, 'hmo_form': hmo_form}
     return render(request, 'acms/workpage.html', context)
 
 @login_required(redirect_field_name = "", login_url = login_url)
@@ -82,7 +84,19 @@ def patient(request):
 
 
 
-
+@login_required(redirect_field_name = "", login_url = login_url)
+def drug(request):
+    if request.method == 'POST':
+        drug_form = DrugForm(request.POST, user = request.user)
+        if drug_form.is_valid():
+            drug_form.save()
+            messages.success(request, str(drug_form))
+            return HttpResponseRedirect(reverse('ACMS:workpage'))
+        else:
+            messages.error(request, "Drug couldn't be created")
+            return HttpResponseRedirect(reverse('ACMS:workpage'))
+    else:
+        return HttpResponseRedirect(reverse('ACMS:workpage'))
 
 
 
