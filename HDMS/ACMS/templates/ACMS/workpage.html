@@ -20,7 +20,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#">Home  </a>
+                    <a href="{% url 'ACMS:homepage' %}">Homepage <span style="padding-left: 10px; vertical-align: middle;" class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> </a>
                 </li>
                 <li>
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -43,12 +43,12 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="patient">
                               <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#patient-submenu" aria-expanded="true" aria-controls="patient-submenu">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#patient-submenu" aria-expanded="false" aria-controls="patient-submenu">
                                   Patient
                                 </a>
                               </h4>
                             </div>
-                            <div id="patient-submenu" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="patient">
+                            <div id="patient-submenu" class="panel-collapse collapse " role="tabpanel" aria-labelledby="patient">
                               <div class="list-group">
                                 <ul>
                                     <li><a id="addPatient"  role="button" data-toggle="modal" data-target="#patientModalForm">Add Patient</a></li>
@@ -320,9 +320,5 @@
             $("#wrapper").toggleClass("toggled");
         });
 
-        $("#hmoForm").submit(function (e) {
-            //e.preventDefault();
-            ////alert($('#checkbox').val());
-        });
     </script>
 {% endblock scripts %}
