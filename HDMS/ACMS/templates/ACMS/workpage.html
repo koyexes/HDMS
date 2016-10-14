@@ -251,7 +251,7 @@
             <h4 id="modalLabel">New HMO</h4>
           </div><!-- modal-header -->
           <div class="modal-body">
-             <form action="{% url 'ACMS:drug' %}" method="post">
+             <form action="{% url 'ACMS:hmo' %}" method="post">
                  {% csrf_token %}
               <div class="form-group">
                 <label for="name">HMO Name</label>
@@ -269,10 +269,9 @@
                 <label for="address">Address</label>
                 {{ hmo_form.address }}
               </div>
-              <div class="checkbox">
-                <label for="hmo_status">
-                   {{ hmo_form.hmo_status }}  Uncheck if HMO is inactive
-                </label>
+              <div class="form-group">
+                <label for="hmo_status">Status</label>
+                {{ hmo_form.hmo_status }}
               </div>
               <div class="form-group">
                   <input style="width: 100%" class= "btn btn-danger" type="submit" value="Add HMO" >
@@ -321,5 +320,9 @@
             $("#wrapper").toggleClass("toggled");
         });
 
+        $("#hmoForm").submit(function (e) {
+            //e.preventDefault();
+            ////alert($('#checkbox').val());
+        });
     </script>
 {% endblock scripts %}
