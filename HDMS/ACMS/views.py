@@ -82,8 +82,6 @@ def patient(request):
         return HttpResponseRedirect(reverse('ACMS:workpage'))
 
 
-
-
 @login_required(redirect_field_name = "", login_url = login_url)
 def drug(request):
     if request.method == 'POST':
@@ -94,6 +92,20 @@ def drug(request):
             return HttpResponseRedirect(reverse('ACMS:workpage'))
         else:
             messages.error(request, "Drug couldn't be created")
+            return HttpResponseRedirect(reverse('ACMS:workpage'))
+    else:
+        return HttpResponseRedirect(reverse('ACMS:workpage'))\
+
+@login_required(redirect_field_name = "", login_url = login_url)
+def hmo(request):
+    if request.method == 'POST':
+        hmo_form = HmoForm(request.POST, user = request.user)
+        if hmo_form.is_valid():
+            hmo_form.save()
+            messages.success(request, str(hmo_form))
+            return HttpResponseRedirect(reverse('ACMS:workpage'))
+        else:
+            messages.error(request, "HMO couldn't be created")
             return HttpResponseRedirect(reverse('ACMS:workpage'))
     else:
         return HttpResponseRedirect(reverse('ACMS:workpage'))

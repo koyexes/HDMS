@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^workpage/$', views.workpage, name='workpage'),
     url(r'^workpage/patient/$', views.patient, name = 'patient'),
     url(r'^workpage/drug/$', views.drug, name = 'drug'),
+    url(r'^workpage/hmo/$', views.hmo, name = 'hmo'),
 
 
 

@@ -56,10 +56,22 @@ class HmoForm(forms.Form):
     mobile = forms.CharField(max_length = 15, required = True, widget = forms.TextInput(attrs = attributes))
     email = forms.EmailField(widget = forms.EmailInput(attrs = attributes))
     address = forms.CharField(required = True, widget = forms.TextInput(attrs = attributes))
-    hmo_status = forms.BooleanField(required = False, widget = forms.CheckboxInput(attrs = {'checked' : 'True'}))
+    hmo_status = forms.ChoiceField(choices = (("1", "Active"), ("0", "Inactive")), initial = "1",
+                                   widget = forms.Select(attrs = attributes))
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
-        super(HmoForm, self).__init__()
+        super(HmoForm, self).__init__(*args, **kwargs)
+
+    def __str__(self):
+        data = self.cleaned_data
+        return "%s has been created" % (data['name'])
+
+    def save(self):
+        data = self.cleaned_data
+        new_hmo  = hmo_list(name = data['name'], mobile = data['mobile'], email = data['email'], address = data[
+            'address'], hmo_status = int(data['hmo_status']), added_by = self.user)
+
+        new_hmo.save()
 
 
